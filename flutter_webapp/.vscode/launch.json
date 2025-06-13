@@ -1,19 +1,16 @@
+// .vscode/launch.json
 {
-    // Use IntelliSense para saber los atributos posibles.
-    // Mantenga el puntero para ver las descripciones de los existentes atributos.
-    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        
-
-
-
-
-
-        {
-            "name": "flutter_webapp",
-            "request": "launch",
-            "type": "dart"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter • lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      // AQUÍ indicas el entry-point; para un proyecto Flutter por defecto:
+      "main.dart": "lib/main.dart",
+      // Opcional: corre en Chrome o dispositivo conectado
+      "deviceId": "chrome"          // o "windows", "macos", "android-id", etc.
+    }
+  ]
 }
+
