@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
+import 'dart:ui' as ui;
 
 void main() {
   runApp(const MyApp());
@@ -28,19 +31,41 @@ class DashboardPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dashboard Demo'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Indicadores Power BI',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Text('Aqui se integrarán los indicadores de Power BI Service.'),
-          ],
-        ),
-      ),
+      body: const PowerBIFrame(),
+    );
+  }
+}
+
+class PowerBIFrame extends StatelessWidget {
+  const PowerBIFrame({super.key});
+
+  static const String _viewType = 'powerbi-frame';
+
+  static final html.IFrameElement _iframe = html.IFrameElement()
+    ..src =
+        'https://app.powerbi.com/view?r=eyJrIjoiODNmMTc3ZjEtY2EwMC00ZmU3LWIxMDUtNmRkZTIwNmMyMzVlIiwidCI6ImU5NDgwZWI4LTdjZWUtNDJjMi04YzM1LTVkMTIyZWNjNWZkOSIsImMiOjR9'
+    ..style.border = '0'
+    ..allowFullscreen = true
+    ..style.width = '100%'
+    ..style.height = '100%';
+
+  // Registra el iframe solo una vez al cargar la clase.
+  static final bool _registered = (() {
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(
+      _viewType,
+      (int viewId) => _iframe,
+    );
+    return true;
+  })();
+
+  @override
+  Widget build(BuildContext context) {
+    // Referencia para evitar que la variable se optimice fuera
+    final _ = _registered;
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: HtmlElementView(viewType: _viewType),
     );
   }
 }
